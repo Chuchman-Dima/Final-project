@@ -6,7 +6,7 @@ from sklearn.metrics import mean_squared_error
 import numpy as np
 from numpy.typing import ArrayLike
 from joblib import dump
-
+import joblib
 
 def train_regression_model(X_train: ArrayLike, y_train: ArrayLike) -> LinearRegression:
     """
@@ -25,8 +25,8 @@ def train_regression_model(X_train: ArrayLike, y_train: ArrayLike) -> LinearRegr
 
     """
 
-    # TODO: your code here
-
+    model = LinearRegression()
+    model.fit(X_train, y_train)
     return model
 
 def save_regression_model(model: LinearRegression, filename: str = "linear_regression_model.joblib"):
@@ -42,7 +42,7 @@ def save_regression_model(model: LinearRegression, filename: str = "linear_regre
 
     """
     
-    # TODO: your code here
+    joblib.dump(model, filename)
 
 def evaluate_regression_model(model: LinearRegression, X_test: ArrayLike, y_test: ArrayLike):
     """
@@ -59,9 +59,10 @@ def evaluate_regression_model(model: LinearRegression, X_test: ArrayLike, y_test
 
     """
     
-    # TODO: your code here
-
+    predictions = model.predict(X_test)
+    mse = mean_squared_error(y_test, predictions)
     print(f"Mean Squared Error: {mse}")
+    return mse
 
 def save_initial_datasets(X: ArrayLike, y: ArrayLike):
     """
@@ -75,10 +76,9 @@ def save_initial_datasets(X: ArrayLike, y: ArrayLike):
         y (array-like): Validation target values.
 
     """
-    X_filename = "X.joblib"
-    y_filename = "y.joblib"
     
-    # TODO: your code here
+    joblib.dump(X, "X.joblib")
+    joblib.dump(y, "y.joblib")
 
 if __name__ == '__main__':
     # Generate a dataset

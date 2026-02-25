@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import joblib
 import streamlit as st
 from joblib import load
 import numpy as np
@@ -21,9 +23,10 @@ def load_and_predict(X: ArrayLike, filename: str = "linear_regression_model.jobl
         np.ndarray: Predicted value.
     """
     
-    # TODO: your code here
+    model = joblib.load(filename)
+    prediction = model.predict(np.array([[X]]))
 
-    return y
+    return prediction[0]
 
 def create_streamlit_app():
     """
@@ -45,20 +48,15 @@ def create_streamlit_app():
     Note: This function does not return any value. It directly manipulates the Streamlit app's UI by 
     writing content and rendering UI elements.
     """
-    # TODO: your code here
+    st.title("Final Project AI Fundamentals")
 
-    # Streamlit app title
+    input_feature = st.slider("Input Feature for Prediction", min_value=-3.0, max_value=3.0, value=1.27, step=0.01)
 
-    # User input for new prediction using a slider
+    if st.button("Predict value"):
+        predicted_target = load_and_predict(X=input_feature, filename="linear_regression_model.joblib")
+        st.write(f"Prediction: {predicted_target}")
 
-    # Button to make a prediction
-
-        # 1. Call load_and_predict functions.
-        # Make sure you convert the input_feature to a matrix before calling load_and_predict, e.g., load_and_predict([[input_feature]])
-
-        # 2. Display the prediction.
-
-        # 4. Call visualize_difference to display a plot visualizing the difference between actual and perdicted value.
+        visualize_difference(input_feature, predicted_target)
 
 def visualize_difference(input_feature: float, prediction: ArrayLike):
     """
@@ -82,40 +80,42 @@ def visualize_difference(input_feature: float, prediction: ArrayLike):
 
     y = load(y_filename)
 
-    actual_target = y[_index_of_closest(X, input_feature)]
+    closest_idx = _index_of_closest(X, input_feature)
+    actual_x = float(X[closest_idx][0])
+    actual_target = float(y[closest_idx])
 
-    # Calculate difference
-    difference = actual_target - prediction
+    difference = actual_target - float(prediction)
 
     # Visualization
     fig = plt.figure(figsize=(6,4))
-    # TODO: your code here
-
     # Plot the entire dataset (X, y) as grey dots to visualize the data distribution.
-    # plt.scatter....
+    plt.scatter(X, y, color='grey', label='Dataset', alpha=0.6)
 
     # Plot the actual target value for a specific input feature as a blue dot.
-    # plt.scatter...
+    plt.scatter(actual_x, actual_target, color='blue', label='Actual Target', zorder=5)
 
     # Plot the predicted target value for the same input feature as a red dot.
-    # plt.scatter...
+    plt.scatter(input_feature, prediction, color='red', label='Predicted Target', zorder=5)
 
-    # Display a legend on the plot to label the different scatter points (dataset, actual target, predicted target).
+    # Draw a dashed line ('k--' for black dashed line) between the actual and predicted target values
+    plt.plot([input_feature, actual_x], [prediction, actual_target], 'k--')
 
-    # Set the title of the plot, describing what is being visualized.
+    # Annotate the plot with the difference between the actual and predicted target values
+    # Розміщуємо текст трохи вище від передбаченого значення
+    plt.annotate(f'Difference = {difference:.2f}',
+                 xy=(input_feature, prediction),
+                 xytext=(10, 15),
+                 textcoords='offset points',
+                 color='black')
 
-    # Set the label for the x-axis to 'Feature', indicating that the x-axis represents the input features.
+    # Display a legend, title, labels, and grid
+    plt.legend()
+    plt.title('Prediction vs Actual Target')
+    plt.xlabel('Feature')
+    plt.ylabel('Target')
+    plt.grid(True)
 
-    # Set the label for the y-axis to 'Target', indicating that the y-axis represents the target values (actual or predicted).
-
-    # Enable a grid on the plot to improve readability.
-
-    # Draw a dashed line ('k--' for black dashed line) between the actual and predicted target values to visually represent the difference.
-    # plt.plot...
-
-    # Annotate the plot with the difference between the actual and predicted target values, positioned halfway between them and offset slightly for visibility.
-    # plt.annotate...
-
+    # Відображення графіка у Streamlit
     st.pyplot(fig)
 
 # This is a helper function. No need to edit it
