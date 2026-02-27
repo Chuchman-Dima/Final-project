@@ -72,7 +72,7 @@ If you prefer to run the code directly on your machine, follow these steps:
 
 3. **Install dependencies:**
    ```bash
-   pip install -r requirements.txt
+   python -m pip install -r requirements.txt
    ```
 
 4. **Train the model (if needed):**
@@ -82,7 +82,7 @@ If you prefer to run the code directly on your machine, follow these steps:
 
 5. **Run the Streamlit app:**
    ```bash
-   streamlit run app.py
+   python -m streamlit run app.py
    ```
 
 ## 🎓 What I Learned & Improved
