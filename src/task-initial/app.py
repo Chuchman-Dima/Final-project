@@ -6,10 +6,11 @@ from joblib import load
 import numpy as np
 from numpy.typing import ArrayLike
 import matplotlib.pyplot as plt
-
+import os
 
 def load_and_predict(X: ArrayLike, filename: str = "linear_regression_model.joblib") -> ArrayLike:
-    model = joblib.load(filename)
+    file_path = os.path.join(os.path.dirname(__file__), "linear_regression_model.joblib")
+    model = joblib.load(file_path)
     prediction = model.predict(np.array([[X]]))
     return prediction[0]
 
