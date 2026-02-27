@@ -27,8 +27,9 @@ def create_streamlit_app():
 
 
 def visualize_difference(input_feature: float, prediction: ArrayLike):
-    X_filename = "X.joblib"
-    y_filename = "y.joblib"
+    base_dir = os.path.dirname(__file__)
+    X_filename = os.path.join(base_dir, "X.joblib")
+    y_filename = os.path.join(base_dir, "y.joblib")
 
     X = load(X_filename)
     y = load(y_filename)
