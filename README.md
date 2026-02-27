@@ -1,4 +1,4 @@
-# 📈 📈 AI Fundamentals Final Project: Linear Regression
+# 📈 AI Fundamentals Final Project: Linear Regression
 
 This project is a full-cycle machine learning application built with **Python**, **Scikit-learn**, and **Streamlit**. It covers everything from synthetic data generation to interactive model deployment and containerization.
 
