@@ -6,7 +6,7 @@ This project is a full-cycle machine learning application built with **Python**,
 
 ## Live Demo
 You can try the live interactive web application here:
-👉 **[Link to Streamlit App](https://final-project-ayx7ntn2okqh2ece7ykm2x.streamlit.app/)**
+ **[Link to Streamlit App](https://final-project-ayx7ntn2okqh2ece7ykm2x.streamlit.app/)**
 
 ## Project Overview & Purpose
 The core objective is to build a simple linear regression model that predicts target values based on input features, and to make this model easily accessible via a web interface. The project is split into two main phases:
